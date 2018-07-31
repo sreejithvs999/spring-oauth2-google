@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/public/css/l7home.css}">
+<title>Google User</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width" />
+<base th:href="${#servletContext.contextPath}" />
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+<script src="https://apis.google.com/js/platform.js"></script>
+<script type="text/javascript">
+
+var auth2=null;
+
+gapi.load('auth2', function(){
+	auth2= gapi.auth2.init({
+		client_id: "[[${@environment.getProperty('google.client.clientId')}]]",
+		fetch_basic_profile: true,
+		scope: 'profile email openid'
+	});
+});
+
+
+$(function(){
+	
+	$("#btnGoogleSignIn").click(function(e){		
+		
+		auth2.signIn().then(function(){				
+			console.log('login success', auth2.currentUser.get());
+					
+			var id_token = auth2.currentUser.get().getAuthResponse().id_token;			
+			console.log('id_token = '+ id_token);
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '[[@{/login/google}]]');
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.onload = function() {
+			  console.log('Signed in as: ' + xhr.responseText);
+			  
+			  
+			};
+			xhr.send('idtoken=' + id_token);
+			
+				
+		});	
+	});
+	
+	$("#btnSignOut").click(function(e) {
+
+		e.preventDefault();
+		
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function() {
+			console.log('User signed out.');
+			window.location.href="[[@{/logout}]]";
+		});
+	});
+	
+	
+	 $(function(){	 	
+		    
+	    	$("#userInfo").length  && $.get("[[@{/api/user/info}]]", {}, function(d, s, xhr) {
+	
+	    		console.log("User info : ", d);	    		
+	    		ko.applyBindings(d);
+	    	});
+	    	
+	    	
+	  });
+	
+});
+
+</script>
+</head>
+<body>
+	<div class="container" style="background-color: #f9f9f9;">
+		<div class="row"> <!-- Header part -->
+			<div class="col">
+				<img th:src="@{/public/img/l7-logo.png}" class="img-fluid" alt="profile image">
+			</div>
+			<div class="col-1">	
+				<section th:if="${authentication != null}">
+					<button id="btnSignOut" class="l7_logout_btn"></button>					
+				</section>
+			</div>
+		</div>
+		
+		<div class="row" style="margin-top: 4em"></div>
+		
+		<div class="row" th:if="${authentication == null}"> <!-- For not authenticated -->
+			<div class="col-12">
+				<div class="container">
+					<div class="row">
+						<div class="col-2">
+							<button id="btnGoogleSignIn" class="btn-primary">Google Sign In</button>		
+							<form th:action="@{/login/google}" method="POST" name="googleLoginForm" id="googleLoginForm">
+								<input id="inIdToken" name="idtoken" type="hidden" value="" />
+							</form>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+		
+		<div class="row" th:if="${authentication != null}"> <!--  For authenticated -->
+			<div class="col-12">
+				<div class="container">
+					<div class="row"  id="userInfo"> <!-- User info -->
+						<div class="col-6">
+							<div class="media">
+								<img data-bind="attr: {src: userData.pictureUrl}" />
+								<div class="media-body l7_prfl_right">
+									<h4 data-bind="text: userData.firstName + ' ' + userData.lastName" style="color: #17baa7; font-weight: bold;">Name</h4>
+									<h5 data-bind="text: userData.designation">Designation</h5>
+									<div>
+										<label class="small">Last Logins</label>
+										<div data-bind="foreach: {data: loginHistory, as: 'logHist'}">
+											<span data-bind="text: logHist.lastLoginTxt" class="small last_login_hist_i"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-6"> <!-- Apps -->
+							<div class="container">
+								<div class="row" data-bind="foreach: {data: userApps, as: 'l7app'}">
+									<div class="col">
+										<a data-bind="attr: {href: l7app.appUrl}" target="_blank">
+											<img data-bind="attr: {src: l7app.iconUrl, title: l7app.appDesc}" class="img-fluid" />
+										</a>
+										<span class="small display l7-app-name" data-bind="text: l7app.name"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+</body>
+</html>

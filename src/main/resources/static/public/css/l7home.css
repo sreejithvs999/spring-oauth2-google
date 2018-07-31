@@ -1,0 +1,21 @@
+.last_login_hist_i {
+	border: 1px solid #dedede;
+	background: white;
+	padding: 1pt;
+}
+
+.l7_prfl_right {
+	margin-left: 1em;
+}
+
+.l7-app-name {
+	margin-left: 30%;
+}
+
+.l7_logout_btn {
+	background-image: url('../img/logout-btn.png');
+	width: 50px;
+	height: 69px;
+	border: none;
+	cursor: pointer;
+}
