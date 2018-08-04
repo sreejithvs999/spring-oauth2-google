@@ -9,11 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class EditUserBean {
 
 	@NotNull(message = "userId invalid.")
@@ -38,4 +34,55 @@ public class EditUserBean {
 	@NotEmpty(message = "groupIds list empty.")
 	private List<Integer> groupIds = new ArrayList<>();
 
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public String getProjectRole() {
+		return projectRole;
+	}
+
+	public void setProjectRole(String projectRole) {
+		this.projectRole = projectRole;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public List<String> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(List<String> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public List<Integer> getGroupIds() {
+		return groupIds;
+	}
+
+	public void setGroupIds(List<Integer> groupIds) {
+		this.groupIds = groupIds;
+	}
+
+	
+	
+	
 }
