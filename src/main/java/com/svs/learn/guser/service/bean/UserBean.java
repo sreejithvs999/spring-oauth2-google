@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserBean {
 
 	private int userId;
@@ -14,10 +13,6 @@ public class UserBean {
 	private String firstName;
 
 	private String lastName;
-
-	private String designation;
-
-	private String projectRole;
 
 	private String locale;
 
@@ -61,22 +56,6 @@ public class UserBean {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public String getProjectRole() {
-		return projectRole;
-	}
-
-	public void setProjectRole(String projectRole) {
-		this.projectRole = projectRole;
 	}
 
 	public String getLocale() {
@@ -126,7 +105,5 @@ public class UserBean {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
-	
-	
 
 }

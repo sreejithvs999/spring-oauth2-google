@@ -34,12 +34,6 @@ public class GUser {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name = "designation")
-	private String designation;
-
-	@Column(name = "project_role")
-	private String projectRole;
-
 	@Column(name = "locale")
 	private String locale;
 
@@ -91,22 +85,6 @@ public class GUser {
 		this.lastName = lastName;
 	}
 
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public String getProjectRole() {
-		return projectRole;
-	}
-
-	public void setProjectRole(String projectRole) {
-		this.projectRole = projectRole;
-	}
-
 	public String getLocale() {
 		return locale;
 	}
@@ -155,5 +133,4 @@ public class GUser {
 		this.roles = roles;
 	}
 
-	
 }

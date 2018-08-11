@@ -46,8 +46,6 @@ public class UserServices {
 			l7user.setLastName(googleUser.getFamilyName());
 			l7user.setPictureUrl(googleUser.getPictureUrl());
 			l7user.setLocale(googleUser.getLocale());
-			l7user.setDesignation("Employee");
-			l7user.setProjectRole("Nil");
 			l7user.setUserStatus("A");
 			l7user.getRoles().add(new UserRole("ROLE_USER"));
 			l7user.setCreatedDt(LocalDateTime.now());

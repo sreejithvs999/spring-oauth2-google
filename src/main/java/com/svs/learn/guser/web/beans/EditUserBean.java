@@ -9,18 +9,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-
 public class EditUserBean {
 
 	@NotNull(message = "userId invalid.")
 	@Min(value = 1, message = "userId invalid")
 	private Integer userId;
-
-	@Size(min = 0, max = 100, message = "designation invalid.")
-	private String designation;
-
-	@Size(min = 0, max = 100, message = "projectRole invalid.")
-	private String projectRole;
 
 	@Pattern(regexp = "^[A|N]$", message = "status invalid.")
 	@NotNull(message = "status invalid.")
@@ -40,22 +33,6 @@ public class EditUserBean {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public String getProjectRole() {
-		return projectRole;
-	}
-
-	public void setProjectRole(String projectRole) {
-		this.projectRole = projectRole;
 	}
 
 	public String getStatus() {
@@ -82,7 +59,4 @@ public class EditUserBean {
 		this.groupIds = groupIds;
 	}
 
-	
-	
-	
 }

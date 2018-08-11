@@ -42,7 +42,7 @@ public class GoogleUserAuthenticationManager implements AuthenticationManager {
 				log.info("Payload == {}", payload);
 
 				GoogleAuthUser user = new GoogleAuthUser();
-				// user.setEmail(payload.get);
+
 				user.setEmail(payload.getEmail());
 				user.setEmailVerified(payload.getEmailVerified());
 				user.setUserId(payload.getSubject());
